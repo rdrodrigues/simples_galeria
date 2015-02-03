@@ -2,8 +2,6 @@
     $.fn.simpGaleria = function(options){
         var defaults        = {     
             'mostrar'               : 3,   
-            'seta_navegar'          : 1,
-            'autoplay'              : 1,
             'speed'                 : 5000
             
         };        
