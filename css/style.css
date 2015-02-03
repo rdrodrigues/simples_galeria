@@ -1,0 +1,158 @@
+/* 
+    Created on : 29/01/2015, 23:01:00
+    Author     : REINALDO RODRIGUES
+*/
+
+body{
+    margin: 0px;
+    padding: 0px;
+    background-color: #ffffff;
+}
+h1{
+    text-align: center;
+    margin: 15px 0px;
+}
+#container{
+    margin: 0px auto;
+    width: 600px;
+    
+}
+#simpgaleria{
+    float: left;
+    display: block;
+    width: 100%;
+    background-color: #000000;
+    position: relative;
+    padding-bottom: 40px;
+}
+#sg-foto{
+    float: left;
+    display: block;
+    border: 5px solid #ffffff;
+    margin-left: 45px;
+    margin-right: 45px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    position: relative;
+}
+#sg-foto img{
+    float: left;
+    width: 100%;
+    max-width: 500px;
+    padding: 0px;
+    margin: 0px;
+}
+#sg-thumbs{
+    float: left;
+    width: 100%;
+    display: block;
+    position: relative;
+    padding: 0px;
+    margin: 0px;
+}
+#sg-thumbs .geral-foto{
+    float: left;
+    display: block;
+    width: 100%;
+    padding-left: 45px;
+    padding-right: 45px;
+    margin: 0px;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#sg-thumbs .geral-foto .bar1{
+    float: left;
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 5px 0px 5px 0px;
+    font-size: 22px;
+    color: #ffffff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #3a3a3a;
+    line-height: 110%;
+    
+}
+#sg-thumbs .geral-foto .bar1 #nvtitulo{
+    float: left;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin: 0px;
+        
+}
+#sg-thumbs .geral-foto .bar2 {
+    float: left;
+    display: inline;
+    width: 100%;    
+    margin: 0px 0px 0px 0px;
+    padding: 0px; 
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+   
+}
+#container-fotos{
+    float: left;
+    display: inline;
+    margin-left: 50px;    
+    position: relative;
+    overflow: hidden;
+    min-height: 95px;
+    margin-top: 40px;
+     -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#sg-thumbs #sgfotos {
+  display:block;
+  float:left;
+  overflow:hidden;
+  position: absolute;
+  margin: 0px;
+  padding: 0px;
+}
+#sg-thumbs li{
+    float: left;
+    display: inline;
+    width: 120px;
+    height: 95px;
+    margin-top: 0px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+#sg-thumbs li img {
+    width: 120px;
+    height: 95px;
+    z-index: 9999999;
+    position: relative;
+}
+#sg-thumbs li.active img{
+    width: 110px;
+    height: 85px;
+    border: 5px solid #ffffff;
+}
+
+#prev{
+    position: absolute;
+    top: -250px;
+    left: 55px;
+    width: 56px;
+    height: 56px;
+    background-image: url(../img/prev.png);
+    text-indent: -9999999em;
+}
+#next{
+    position: absolute;
+    top: -250px;
+    right: 55px;
+    width: 56px;
+    height: 56px;
+    background-image: url(../img/next.png);
+    text-indent: -9999999em;
+}
