@@ -97,14 +97,20 @@ h1{
     box-sizing: border-box;
    
 }
+
 #container-fotos{
     float: left;
     display: inline;
+    height: 100px;
+    /*
     margin-left: 50px;    
+    */
     position: relative;
     overflow: hidden;
+    /*
     min-height: 95px;
     margin-top: 40px;
+    */
      -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -120,21 +126,27 @@ h1{
 #sg-thumbs li{
     float: left;
     display: inline;
+    /*
     width: 120px;
     height: 95px;
+    */
     margin-top: 0px;
     margin-right: 10px;
     margin-left: 10px;
 }
 #sg-thumbs li img {
+    /*
     width: 120px;
     height: 95px;
+    */
     z-index: 9999999;
     position: relative;
 }
 #sg-thumbs li.active img{
+    /*
     width: 110px;
     height: 85px;
+    */
     border: 5px solid #ffffff;
 }
 

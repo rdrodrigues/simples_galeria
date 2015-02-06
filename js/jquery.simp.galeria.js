@@ -3,11 +3,13 @@
         var defaults        = {     
             'mostrar'       : 3,        // quantas imagens irá mostrar caso por linha   
             'speed'         : 5000,     // tempo de transição das imagens
-            'linhas'        : 1,        // numero de linhas - caso seja escolhido mais de 
+            'nr_linha'      : 1,        // numero de linhas - caso seja escolhido mais de 
                                         //1 linha será multiplicado a linha pela quantidade mostrada 
-            'seta_naveg'    : 0
-            
+            'seta_naveg'    : 0,        // mostrar ou não a seta de navagação 0= não / 1 = sim
+            'auto_play'     : 0,        // iniciar automaticamente            
+            'active_borda'  : 5         // se as thumbs ativa mostrará borda
         };        
+        
         var settings        = $.extend( {}, defaults, options );          
         var totalItem       = 0;
         var urlImg          = new Array(); // array que armazena a url das imagens
@@ -66,42 +68,64 @@
             // calcula a quantida de item sempre completando para não faltar thumbs
             tItem = (Math.ceil(totalItem/settings.mostrar))*settings.mostrar;                       
             
-            
-            // monta os li com as imagens existentes
-            for(x = 1 ; x <= tItem; x++){                
-                //coloca a classe active no primeiro elemento
-                active = x == 1 ? 'class="active"' : '';                
-                // so considerá se existir imagem
-                if( urlImg[x] ){                    
-                    li += '<li ' + active + '><img data-ordem="' + x + '" src="' + urlImg[x] + '" /></li>';
+            // se a quantidade de linhas for igual a 1 
+            if(settings.nr_linha === 1){
+                
+                // monta os li com as imagens existentes
+                for(x = 1 ; x <= tItem; x++){
+                    
+                    //coloca a classe active no primeiro elemento
+                    active = x == 1 ? 'class="active"' : '';                
+                    
+                    // so considerá se existir imagem caso não exista 
+                    // coloca uma imagem padrão representando que 
+                    // não existe imagem completando a quantidade 
+                    if( urlImg[x] ){
+                        li += '<li ' + active + '><img data-ordem="' + x + '" src="' + urlImg[x] + '" /></li>';
+                    }else{
+                        li += '<li class="notfound"><img src="img/not-found.jpg" /></li>';
+                    }
                 }
-                // caso não exista imagem cria um li vazio
-                if( !urlImg[x] ){
-                    li += '<li class="notfound"><img src="img/not-found.jpg" /></li>';
-                }
-            }
+                
+                
+                //########## gera a estrutura
+                
+                // inseri o texto 
+                $("#sg-thumbs .geral-foto .bar1").append('<p id="nvtitulo">'+textoImg[1]+'</p>');
+                // inseri a estrutura com as imagens
+                $("#sg-thumbs .geral-foto .bar2").append('<div id="container-fotos"><ul id="sgfotos">'+li+'</ul></div>');
+                
+                
+                //######Monta o tamanho div pai
+                
+                // pega o tamanho da div onde vai ficar as thums
+                var widthThumbsGaleria      = $("#sg-thumbs").width(); 
+                
+                // tamanho da borda
+                var borderActive            = settings.active_borda ? parseInt(settings.active_borda) : 0; 
+                
+                var widthThumbs     = $("#sgfotos li").width(); // pega a largura
+                var widthActive     = $("#sgfotos li.active").width();
+                var marginLeft      = ($("#sgfotos li").css('margin-left')).split('px')[0]; // pega o tamanho da margem esqueda
+                var marginRight     = ($("#sgfotos li").css('margin-right')).split('px')[0]; // pega o tamanho da margem direira
+                var marginLeft      = ($("#sgfotos li").css('margin-left')).split('px')[0]; // pega o tamanho da margem esqueda
+                var marginRight     = ($("#sgfotos li").css('margin-right')).split('px')[0]; // pega o tamanho da margem direira
+                
+                // total de thumbs - sempre completando a quantidade de thumbs 
+                // Ex: 13 thumbs mostrara 15 sendo duas thumbs vazia
+                var totalThumbs         = (Math.ceil(totalItem/settings.mostrar))*settings.mostrar ;
+                
+                var totalMargin         = totalThumbs *( parseInt(marginLeft)+ parseInt(marginRight)); 
+                alert(totalMargin);
+                var tmhThumbs           = widthThumbsGaleria ;
+                
+                // largura de todas as thumbs criadas 
+                var wTotalThumbs        = widthThumbsGaleria /totalThumbs ;
             
-            // gera a estrutura
-            $("#sg-thumbs .geral-foto .bar1").append('<p id="nvtitulo">'+textoImg[1]+'</p>');
-            $("#sg-thumbs .geral-foto .bar2").append('<div id="container-fotos"><ul id="sgfotos">'+li+'</ul></div>');
+                //tamanhos da margim de todas as thumbs
+                var totalMarginThumbs   = (parseInt(marginLeft) + parseInt(marginRight)) * totalThumbs;
             
-            
-            //######Monta o tamanho div pai
-            var widthThumbs     = $("#sgfotos li").width(); // pega a largura
-            var widthActive     = $("#sgfotos li.active").width();
-            var marginLeft      = ($("#sgfotos li").css('margin-left')).split('px')[0]; // pega o tamanho da margem esqueda
-            var marginRight     = ($("#sgfotos li").css('margin-right')).split('px')[0]; // pega o tamanho da margem direira
-            var marginLeft      = ($("#sgfotos li").css('margin-left')).split('px')[0]; // pega o tamanho da margem esqueda
-            var marginRight     = ($("#sgfotos li").css('margin-right')).split('px')[0]; // pega o tamanho da margem direira
-
-            // total de thumbs - sempre completando a quantidade de thumbs 
-            // Ex: 13 thumbs mostrara 15 sendo duas thumbs vazia
-            var totalThumbs         = (Math.ceil(totalItem/settings.mostrar))*settings.mostrar ;
-            // largura de todas as thumbs criadas 
-            var wTotalThumbs        = totalThumbs * widthThumbs;
-            //tamanhos da margim de todas as thumbs
-            var totalMarginThumbs   = (parseInt(marginLeft) + parseInt(marginRight)) * totalThumbs;
-            // tamanho total com todas as thumbs e suas margim
+                // tamanho total com todas as thumbs e suas margim
             var wTotalElemento      = wTotalThumbs + totalMarginThumbs +  widthActive;
             
             
@@ -109,7 +133,7 @@
             tamanhoDiv = ( (parseInt(marginLeft) + parseInt(marginRight)) * settings.mostrar ) + ( widthThumbs * settings.mostrar );
         
             //aplica o css         
-            $("#container-fotos").css({'width':tamanhoDiv + 'px'}); 
+            $("#container-fotos").css({'width':widthThumbsGaleria + 'px'}); 
             
             // css responsavel pela o alinhamento horizontal das thumbs
             $("#sgfotos").css({"width" : wTotalElemento + "px" });
@@ -122,7 +146,7 @@
                 '-webkit-transition': 'all .2s ease-in',
                 'transition': 'all .2s ease-in'
             });            
-        
+            }
         };
         
         // chama a função para gerar as thumbs
