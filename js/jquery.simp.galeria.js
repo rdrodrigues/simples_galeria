@@ -1,17 +1,20 @@
 (function($){    
     $.fn.simpGaleria = function(options){
         var defaults        = {     
-            'mostrar'               : 3,   
-            'speed'                 : 5000
+            'mostrar'       : 3,        // quantas imagens irá mostrar caso por linha   
+            'speed'         : 5000,     // tempo de transição das imagens
+            'linhas'        : 1,        // numero de linhas - caso seja escolhido mais de 
+                                        //1 linha será multiplicado a linha pela quantidade mostrada 
+            'seta_naveg'    : 0
             
         };        
         var settings        = $.extend( {}, defaults, options );          
         var totalItem       = 0;
-        var urlImg          = new Array();
-        var urlImgThumbs    = new Array();
-        var textoImg        = new Array();
+        var urlImg          = new Array(); // array que armazena a url das imagens
+        var urlImgThumbs    = new Array(); // array que armazena a url das thumbs
+        var textoImg        = new Array(); // array que armazena o texto
         var tamanhoDiv      = 0;
-        //var pageAtual       = $("#load-container").attr('data-pageatual');
+        
                 
         //pega todos as imagem 
         $('.item-sg',this).each(function(i){            
@@ -33,16 +36,14 @@
         $(this).remove();
         
         // função para mostrar as imagem
-        var mostrarImagem = function(imgURL){            
-            //pega a url do site
-            var urlSite = (window.location.href).split('produtos')[0];            
+        var mostrarImagem = function(imgURL){                                
             // cria o objeto imagem
             img = new Image();            
             // inseri a imagem do loading de fundo
             $("#sg-foto").css({
-                'background-image'     : 'url(img/loading.gif)',
-                'background-position'  : 'center center',
-                'background-repeat'    : 'no-repeat'
+                'background-image'      : 'url(img/loading.gif)',
+                'background-position'   : 'center center',
+                'background-repeat'     : 'no-repeat'                
             });            
             // carrega da imagem
             $(img).load(function(){
@@ -53,24 +54,29 @@
          };
          
         // mostra sempre a primeira imagem
-        mostrarImagem( urlImg[1] );                
+        mostrarImagem( urlImg[1] );    
+        
         // função que gera as Thumbs
-        var gerarThumbs = function(){            
+        var gerarThumbs = function(){     
+            
             var li = '';            
             var tItem = 0;
             var active = '';
+            
             // calcula a quantida de item sempre completando para não faltar thumbs
             tItem = (Math.ceil(totalItem/settings.mostrar))*settings.mostrar;                       
+            
+            
             // monta os li com as imagens existentes
             for(x = 1 ; x <= tItem; x++){                
                 //coloca a classe active no primeiro elemento
                 active = x == 1 ? 'class="active"' : '';                
                 // so considerá se existir imagem
-                if( urlImgThumbs[x] ){                    
-                    li += '<li ' + active + '><img data-ordem="' + x + '" src="' + urlImgThumbs[x] + '" /></li>';
+                if( urlImg[x] ){                    
+                    li += '<li ' + active + '><img data-ordem="' + x + '" src="' + urlImg[x] + '" /></li>';
                 }
                 // caso não exista imagem cria um li vazio
-                if( !urlImgThumbs[x] ){
+                if( !urlImg[x] ){
                     li += '<li class="notfound"><img src="img/not-found.jpg" /></li>';
                 }
             }
